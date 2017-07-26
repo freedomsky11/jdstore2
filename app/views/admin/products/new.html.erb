@@ -1,0 +1,11 @@
+<h1> New Product </h1>
+<br />
+<%= simple_form_for [:admin, @product] do |f| %>
+  <div class="form-group">
+    <%= f.input :title %>
+    <%= f.input :description %>
+    <%= f.input :quantity %>
+    <%= f.input :price %>
+  </div>
+    <%= f.submit "Submit", class: "btn btn-primary"%>
+<% end %>

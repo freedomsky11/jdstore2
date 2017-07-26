@@ -12,7 +12,39 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
-    @product = Prodcut.find(params[:id])
+    @product = Product.find(params[:id])
   end
-  
+
+  def create
+    @product = Product.new(product_params)
+
+    if @product.save
+      redirect_to admin_products_path
+    else
+      render :new
+    end
+  end
+
+  def update
+    @product = Product.find(params[:id])
+    if @product.update(product_params)
+      redirect_to admin_products_path
+      flash[:notice] = "Update Succeed."
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    flash[:alert] = "Product Deleted."
+    redirect_to admin_products_path
+  end
+
+  private
+
+  def product_params
+    params.require(:product).permit(:title, :description, :price, :quantity)
+  end
 end

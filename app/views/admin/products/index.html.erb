@@ -1,0 +1,39 @@
+<h1>Product List</h1>
+
+<br />
+
+<%= link_to("Add new product", new_admin_product_path, :class => "btn btn-default pull-right") %>
+
+<br />
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>品名</th>
+      <th>数量</th>
+      <th>叙述</th>
+      <th>库存</th>
+      <th>价格</th>
+      <th>选项</th>
+      <th>创建日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.id %></td>
+        <td><%= link_to(product.title, admin_product_path(product)) %></td>
+        <td><%= product.description %></td>
+        <td><%= product.quantity %></td>
+        <td><%= product.price %></td>
+        <td>
+          <%= link_to("Edit", edit_admin_product_path(product)) %>
+          |
+          <%= link_to("Destroy", admin_product_path(product), method: :DELETE) %>
+        </td>
+        <td><%= product.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
