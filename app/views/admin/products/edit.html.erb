@@ -1,11 +1,23 @@
 <h1> Edit Product </h1>
-<br />
+
 <%= simple_form_for [:admin, @product] do |f| %>
-  <div class="form-group">
+
+  <div class="group">
     <%= f.input :title %>
+  </div>
+
+  <div class="group">
     <%= f.input :description %>
+  </div>
+
+  <div class="group">
     <%= f.input :quantity %>
+  </div>
+
+  <div class="group">
     <%= f.input :price %>
   </div>
-    <%= f.submit "Submit", class: "btn btn-primary"%>
+
+    <%= f.submit "Submit", class: "btn btn-primary", data: { disable_with: "Submitting..." }%>
+
 <% end %>
