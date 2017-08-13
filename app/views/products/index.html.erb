@@ -3,14 +3,12 @@
     <div class="col-xs-6 col-md-3">
        <%= link_to product_path(product) do %>
         <% if product.image.present? %>
-          <%= image_tag product.image.thumb.url %>
+          <%= image_tag(product.image.thumb.url, class: "thumbnail") %>
         <% else %>
-          <%= image_tag "http://www.glb-re.com/images/no-image.png" %>
+          <%= image_tag("http://www.glb-re.com/images/no-image.png", class: "thumbnail") %>
         <% end %>
-        <br />
-        <br />
-        <%= product.title %>
       <% end %>
+      <%= product.title %> ￥ <%= product.price %>
     </div>
   <% end %>
 </div>
