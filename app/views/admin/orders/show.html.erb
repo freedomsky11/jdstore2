@@ -1,23 +1,16 @@
 <div class="row">
   <div class="col-md-12">
 
-    <h2> 订单明细(<%= @order.aasm_state %>)</h2>
+    <h2> 订单明细(<%= render_order_paid_state(@order) %>) </h2>
 
-    <div class="group pull-right">
-      <% if @order.aasm_state == "order_placed" || @order.aasm_state == "paid"%>
-        <%= link_to("取消订单", cancel_admin_order_path(@order.token), method: :post, class: "btn btn-default") %>
-      <% end %>
-      <% if @order.aasm_state == "paid" %>
-        <%= link_to("出货", shipping_admin_order_path(@order.token), method: :post, class: "btn btn-default") %>
-      <% end %>
-    </div>
-
+    <%= render "admin/orders/state_option", order: @order %>
 
     <table class="table table-bordered">
       <thead>
         <tr>
           <th style="width:80%">商品明细</th>
           <th>单价</th>
+          <th>数量</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +18,7 @@
           <tr>
             <td><%= product_list.product_name %></td>
             <td><%= product_list.product_price %></td>
+            <td><%= product_list.product_quantity %></td>
           </tr>
         <% end %>
       </tbody>
@@ -34,6 +28,7 @@
         总计 <%= @order.total %> CNY
       </span>
     </div>
+
     <hr />
 
     <h2> 寄送资讯 </h2>

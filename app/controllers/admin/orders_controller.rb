@@ -1,27 +1,41 @@
 class Admin::OrdersController < ApplicationController
+  layout "admin"
+  before_action :authenticate_user!
+  before_action :admin_required
+
   def index
-    @orders = Order.all.order("id DESC")
+    @orders = Order.order("id DESC")
   end
 
   def show
-    @order = Order.find_by_token(params[:id])
+    @order = Order.find(params[:id])
     @product_lists = @order.product_lists
   end
 
-  def cancel
-    @order = Order.find_by_token(params[:id])
-    @order.cancel_order!
-    OrderMailer.notify_admin_cancel(@order).deliver!
-
-    redirect_to admin_order_path(@order.token), notice: "已取消订单。"
+  def ship
+    @order = Order.find(params[:id])
+    @order.ship!
+    OrderMailer.notify_ship(@order).deliver!
+    redirect_to :back
   end
 
-  def shipping
-    @order = Order.find_by_token(params[:id])
-    @order.ship!
-    OrderMailer.notify_shipping(@order).deliver!
+  def shipped
+    @order = Order.find(params[:id])
+    @order.deliver!
+    redirect_to :back
+  end
 
-    redirect_to admin_order_path(@order.token), notice: "已出货。"
+  def cancel
+    @order = Order.find(params[:id])
+    @order.cancel_order!
+    OrderMailer.notify_cancel(@order).deliver!
+    redirect_to :back
+  end
+
+  def return
+    @order = Order.find(params[:id])
+    @order.return_good!
+    redirect_to :back
   end
 
 end
